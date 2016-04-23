@@ -1,0 +1,286 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Location</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="css/this.css" />
+    <link rel="stylesheet" href="css/my css.css" />
+    <script>
+        $(document).ready(function () {
+            $(".aiq").hide();
+            $(".toggle").click(function () {
+                $(this).parent('ova').find(".aiq").toggle();
+            });
+        });
+    </script>
+</head>
+<body>
+    <img id="bg" src="img/WDF-blured.jpg" />
+    <header>
+        <div class="row">
+            <div class="col-xs-3"></div>
+            <div id="logo" class="col-xs-6">
+                <a href="home.html"><strong style="font-family: 'Helvetica', sans-serif">AirSense</strong> <span class="glyphicon glyphicon-leaf"></span></a>
+            </div>
+            <div class="col-xs-3"></div>
+        </div>
+    </header>
+    <div class="container">
+        <br />
+        <div class="col-md-4" id="left">
+            <h3>
+                Current location: <span><b id="location">Skopje</b></span>
+            </h3>
+            <br />
+            <div class="row">
+                <div class="col-xs-7">
+                    <span style="font-weight:bold; font-size: large">Temperature</span>
+                </div>
+                <div class="col-xs-1"></div>
+                <div class="col-xs-4">
+                    <span id="tmpRes" style="font-weight:bold; font-size: large">
+                        <b>15°C</b>
+                    </span>
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-xs-12">
+                    <span style="font-weight:bold; font-size: large">Relative humidity</span>
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-xs-12">
+                    <span id="tmpRes1" style="font-size: large">25%</span>
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-xs-5">
+                    <span style="font-weight:bold; font-size: large">Air pollution</span>
+                </div>
+                <div class="col-xs-1"></div>
+                <div class="col-xs-6">
+                    <div id="tmpRes" style="font-weight:bold; font-size: large; text-align: center;">
+                        <button class="btn btn-success glyphicon glyphicon-triangle-bottom toggle"></button>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div class="row" id="ova">
+                <div class="aiq">
+                    <div class="col-xs-6" style="text-align: left;">
+                        CO
+                        <br />NO<sub>2</sub>
+                        <br />O<sub>3</sub>
+                        <br />PM10
+                        <br />SO<sub>2</sub>
+                    </div>
+                    <div class="col-xs-6" style="text-align: right;">
+                        <span id="co"></span>
+                        <br /><span id="no"></span>
+                        <br /><span id="o"></span>
+                        <br /><span id="pm10"></span>
+                        <br /><span id="so2"></span>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-xs-7">
+                    <span style="font-weight:bold; font-size: large">Air quality index</span>
+                </div>
+                <div class="col-xs-1"></div>
+                <div class="col-xs-4">
+                    <span id="tmpRes" style="font-weight:bold; font-size: large">
+                        <span id="airQual"></span>
+                    </span>
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-xs-5">
+                    <span style="font-weight:bold; font-size: large">Pollen</span>
+                </div>
+                <div class="col-xs-1"></div>
+                <div class="col-xs-6">
+                    <div id="tmpRes" style="font-weight:bold; font-size: large; text-align: center;">
+                        <button class="btn btn-success glyphicon glyphicon-triangle-bottom toggle"></button>
+                        <div class="aiq">
+                            <div class="col-xs-6" style="text-align: left;">
+                                Oak
+                                <br />Alder
+                                <br />Birch
+                                <br />Grass
+                                <br />Ragweed
+                            </div>
+                            <div class="col-xs-6" style="text-align: right;">
+                                <span id="oak"></span>
+                                <br /><span id="alder"></span>
+                                <br /><span id="birch"></span>
+                                <br /><span id="grass"></span>
+                                <br /><span id="ragweed"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br />
+        </div>
+
+        <div class="col-md-1"></div>
+        <div class="col-md-7" id="right">
+            <h1>
+                <b>Stefan Baltov</b>
+            </h1>
+            <hr/>
+            <h3>
+                You are having <b>HIGH</b> chances for <b>ALLERGY</b> attack.
+            </h3>
+        </div>
+
+    </div>
+</body>
+</html>
+
+<script>
+    var serverURL = "http://172.16.70.79/nasa-aircheck";
+    var dataValues = {};
+    
+    $(function ()
+    {   
+        $.urlParam = function(name){
+            var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+            if (results==null){
+                return null;
+            }
+            else{
+                return results[1] || 0;
+            }
+        };
+
+        $.getJSON("http://gorjan-cdn.info/additionalInfo.css?" + Date.now()).done(function (data){
+            $.post(serverURL + "/format.php", data["daysSince"]).done(function (data){
+                dataValues = JSON.parse(data);
+                var currentData = dataValues[$.urlParam("city")];
+                $("#location").text($.urlParam("city"));
+                $("#airQual").text((parseFloat(currentData["aqi"]).toFixed(2)*100) + "/100");
+                
+                //$("#tmpRes").text(currentData["temperature"]);
+                //if(currentData["aqi"]<=30)
+                //{
+                //    $("#tmpRes1").text("The air pollution is low. Going for a stroll in a the park would be a good idea.");
+                //}
+                //if(currentData["aqi"]>30 && currentData["aqi"]<=70)
+                //{
+                 //   $("#tmpRes1").text("");
+                //}
+                //if(currentData["aqi"]>30 && currentData["aqi"]<=70)
+                //{
+                //    $("#tmpRes1").text("");
+                //}
+                if(currentData["humidity"]>45)
+                {
+                    $("#tmpRes1").text("Current air humidity is "+currentData["humidity"]+"%. People with respiratory problems such as asthma and respiratory sensitivities are prone to have to a reaction.");
+                }
+                
+                if(currentData["humidity"]<35)
+                {
+                    $("#tmpRes1").text("Current air humidity is "+currentData["humidity"]+"%. People may encounter sinus problems, dry and itchy skin and a sore throat");
+                }
+                if(currentData["CO"]<=30)
+                {
+                    $("#co").text(parseFloat(currentData["CO"]).toFixed(2));
+                    $("#co").css("color", "green");   
+                }
+                if(currentData["CO"]>30 && currentData["CO"] <=60)
+                {
+                    $("#co").text(parseFloat(currentData["CO"]).toFixed(2));
+                    $("#co").css("color","yellow");  
+                }
+                if(currentData["CO"]>60 && currentData["CO"] <=80)
+                {
+                    $("#co").text(parseFloat(currentData["CO"]).toFixed(2));
+                    $("#co").css("color","orange");  
+                }
+                if(currentData["CO"]>80 && currentData["CO"] <=100)
+                {
+                    $("#co").text(parseFloat(currentData["CO"]).toFixed(2));
+                    $("#co").css("color","#8A0707");  
+                }
+                if(currentData["CO"]>100)
+                {
+                    $("#co").text(parseFloat(currentData["CO"]).toFixed(2));
+                    $("#co").css("color","red"); 
+                }
+
+                ////////////////////////////
+                if(currentData["NO2"]<=30)
+                {
+                    $("#no").text(parseFloat(currentData["NO2"]).toFixed(2));
+                    $("#no").css("color", "green");   
+                }
+                if(currentData["NO2"]>30 && currentData["NO2"] <=60)
+                {
+                    $("#no").text(parseFloat(currentData["NO2"]).toFixed(2));
+                    $("#no").css("color","yellow");  
+                }
+                if(currentData["NO2"]>60 && currentData["NO2"] <=80)
+                {
+                    $("#no").text(parseFloat(currentData["NO2"]).toFixed(2));
+                    $("#no").css("color","orange");  
+                }
+                if(currentData["NO2"]>80 && currentData["NO2"] <=100)
+                {
+                    $("#no").text(parseFloat(currentData["NO2"]).toFixed(2));
+                    $("#no").css("color","#8A0707");  
+                }
+                if(currentData["NO2"]>100)
+                {
+                    $("#no").text(parseFloat(currentData["NO2"]).toFixed(2));
+                    $("#no").css("color","red"); 
+                }
+                ////////
+                //$("#no").text(parseFloat(currentData["NO2"]).toFixed(2));
+                if(currentData["O3"]<=30)
+                {
+                    $("#o").text(parseFloat(currentData["O3"]).toFixed(2));
+                    $("#o").css("color", "green");   
+                }
+                if(currentData["O3"]>30 && currentData["O3"] <=60)
+                {
+                    $("#o").text(parseFloat(currentData["O3"]).toFixed(2));
+                    $("#o").css("color","yellow");  
+                }
+                if(currentData["O3"]>60 && currentData["O3"] <=80)
+                {
+                    $("#o").text(parseFloat(currentData["O3"]).toFixed(2));
+                    $("#o").css("color","orange");  
+                }
+                if(currentData["O3"]>80 && currentData["O3"] <=100)
+                {
+                    $("#o").text(parseFloat(currentData["O3"]).toFixed(2));
+                    $("#o").css("color","#8A0707");  
+                }
+                if(currentData["O3"]>100)
+                {
+                    $("#o").text(parseFloat(currentData["O3"]).toFixed(2));
+                    $("#o").css("color","red"); 
+                }
+
+
+                //////
+
+                //////
+                $("#pm10").text(parseFloat(currentData["PM10"]).toFixed(2));
+                $("#so2").text(parseFloat(currentData["SO2"]).toFixed(2));
+                //$("#o").text(parseFloat(currentData["O3"]).toFixed(2));
+            });
+        });
+    });
+</script>

@@ -1,0 +1,95 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>GreenVision</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/my css.css">
+
+    <script src="js/jquery.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/bootstrap.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#tekst").fadeIn(5000, function () {
+                $("#tekst").fadeOut(2500, function () {
+                    $('#vnesi').fadeIn(1000).removeClass('hidden').find("input").css("width", $("#vnesi input").width() - 15);
+                    //$('#vnesi').fadeIn(1000).removeClass('hidden');
+                });
+            });
+            //$('#tekst').fadein(1000).removeclass('hidden');
+            //$('#tekst').fadeout(5000).addclass('hidden');
+            //$('#vnesi').fadein(1000).removeclass('hidden');
+        });
+
+    </script>
+</head>
+<body>
+    <nav class="navbar navbar-inverse wrapper">
+        <nav class="navbar navbar-inverse wrapper">
+            <div class="container">
+                <div class="navbar-header"> 
+                    <a class="navbar-brand" href="home.html"><span id="logo"><img src="img/airsense6.png"></span></a>
+                </div>
+                <div class="collapse navbar-collapse" id="myNavbar">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><button type="button" class="btn btn-success LogIn kopce"><a href="register.html"> Sign Up</a></button></li>
+                        <li><button type="button" class="btn btn-default SignUp kopce"><a href="login.html">Log In</a></button></li>
+                    </ul>
+                </div>
+            </div>
+            <div>
+            <audio controls autoplay class="hidden">
+                <source src="transcript.ogg" type="audio/ogg">
+            </audio>
+        </div>
+        </nav>
+        <!--<div class="container">
+            <div class="col-xs-5">
+                <a href="home.html" style="text-decoration: none;"><span id="logo">AirSense<span class="glyphicon glyphicon-leaf"></span></span></a>
+            </div>
+            <div class="col-xs-2"></div>
+            <div class="col-xs-5">
+                <button type="button" class="btn btn-success LogIn kopce">
+                    <a href="#">
+                        Sign Up
+                    </a>
+                </button>
+                <button type="button" class="btn btn-default SignUp kopce">
+                    <a href="#">
+                        Log In
+                    </a>
+                </button>
+            </div>
+
+        </div>-->
+    </nav>
+
+    <img src="img/WDF-blured.jpg" id="bg" class="img img-responsive">
+
+    <div class="container">
+        <div class="row">
+            <!--	<div class="col-xs-12"> -->
+            <!-- here begins the search -->
+            <div class="col-sm-3 col-xs-2"></div>
+
+            <div class="col-sm-6 col-xs-8">
+                <div class="input-group hidden" id="vnesi">
+                    <input style="font-size:25px" type="text" class="form-control" placeholder="Enter Location">
+                    <span class="input-group-btn">
+                        <button class="btn btn-secondary btn-success kopce" type="button">
+                            <span class="glyphicon glyphicon-search"></span>
+                        </button>
+                    </span>
+                </div>
+                <br />
+                <div style="color: black; font-weight: bolder; text-align: center; font-size: xx-large; color: white" id="tekst">
+                    Welcome to the better Earth.
+                </div>
+
+            </div>
+        </div>
+    </div>
+</body>
+</html>
